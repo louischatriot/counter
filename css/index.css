@@ -35,10 +35,14 @@
   text-align: center;
 }
 
-#logo {
+#logo-container {
   position: fixed;
   top: 73%;
-  left: 43%;
+  width: 100%;
+}
+
+#logo {
+  margin: 0 auto;
   width: 224px;
   height: 96px;
   background-image: url("../img/logo.png");
