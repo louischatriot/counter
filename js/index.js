@@ -1,5 +1,5 @@
 var count = 0
-  , incrementPerSecond = 327
+  , incrementPerSecond = 254
   , minDelay = 1900
   , maxDelay = 3700
   , latest = Date.now()
