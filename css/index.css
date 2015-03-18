@@ -1,6 +1,71 @@
-#counter{}
+#not-shared-message {
+  color: white;
+  font-size: 60px;
+  font-family: Arial;
+  position: fixed;
+  top: 7%;
+  left: 15%;
+  width: 70%;
+  text-align: center;
+}
+
+#lost-message {
+  color: rgb(246, 167, 4);
+  font-size: 60px;
+  font-weight: bold;
+  font-family: Arial;
+  position: fixed;
+  top: 28%;
+  left: 15%;
+  width: 70%;
+  text-align: center;
+}
+
+
 #counter {
-  color: red;
+  color: rgb(246, 167, 4);
   font-size: 170px;
   font-weight: bold;
+  font-family: Arial;
+  position: fixed;
+  top: 44%;
+  left: 15%;
+  width: 70%;
+  border: 3px solid white;
+  text-align: center;
 }
+
+#logo {
+  position: fixed;
+  top: 67%;
+  left: 43%;
+  width: 224px;
+  height: 96px;
+  background-image: url("../img/logo.png");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+#background {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  background-image: url("../img/stock.jpg");
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+#mask {
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  background-color: rgb(0, 0, 20);
+  opacity: 0.7;
+}
+
+
+
