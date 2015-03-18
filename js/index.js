@@ -65,6 +65,21 @@ function nowUpdating () {
   updateCounter();
   setTimeout(nowUpdating, getRandomDelay());
 }
+
+
+// Get initial value if any
+
+try {
+  var query = document.location.search;
+  query = query.substring(3);
+  query = parseInt(query, 10);
+  if (!isNaN(query)) {
+    count = query;
+  }
+} catch (e) {
+  // Do nothing, initial value already defined
+}
+
 nowUpdating();
 
 
