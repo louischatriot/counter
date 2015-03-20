@@ -15,7 +15,7 @@ function pad (n) {
   return n.toString();
 }
 
-// Quick and dirty way to frmat as euros
+// Quick and dirty way to format as euros
 function formatAsEuros (amount) {
   var res = '€'
     , currentPart
@@ -36,6 +36,29 @@ function formatAsEuros (amount) {
   return res;
 }
 
+// Quick and dirty way to format as dollars
+function formatAsDollars (amount) {
+  var res = ''
+    , currentPart
+    ;
+
+  if (amount === 0) { return '$ 0'; }
+
+  while (amount > 0) {
+    currentPart = amount - 1000 * Math.floor(amount / 1000);
+    if (amount === currentPart) {   // No padding if it's the last part
+      res = currentPart + ',' + res;
+    } else {
+      res = pad(currentPart) + ',' + res;
+    }
+    amount = (amount - currentPart) / 1000;
+  }
+
+  return '$ ' + res.substring(0, res.length -1);
+}
+
+var format = formatAsEuros;
+
 function getRandomDelay () {
   return Math.floor(minDelay + (maxDelay - minDelay) * Math.random());
 }
@@ -55,7 +78,7 @@ function updateCounter () {
 function getCounterToValue (fromValue, toValue, beginTime) {
   var toDisplay = fromValue + (toValue - fromValue) * (Date.now() - beginTime) / updateTime;
   toDisplay = Math.min(toDisplay, toValue);
-  $counter.html(formatAsEuros(Math.floor(toDisplay)));
+  $counter.html(format(Math.floor(toDisplay)));
   if (Date.now() - beginTime < updateTime) {
     setTimeout(function () { getCounterToValue(fromValue, toValue, beginTime); }, microDelay);
   }
@@ -67,18 +90,53 @@ function nowUpdating () {
 }
 
 
-// Get initial value if any
+// Get query string as an object
+function getQuerystringAsObject () {
+  var res = {};
 
+  var qs = document.location.search.substring(1).split('&');
+  qs.forEach(function (k) {
+    res[k.split('=')[0]] = k.split('=')[1];
+  });
+
+  return res;
+}
+
+
+
+// Initialization
+var qs = getQuerystringAsObject();
+
+// Initial counter value
 try {
-  var query = document.location.search;
-  query = query.substring(3);
-  query = parseInt(query, 10);
-  if (!isNaN(query)) {
-    count = query;
+  var initialValue = qs.d;
+  initialValue = parseInt(initialValue, 10);
+  if (!isNaN(initialValue)) {
+    count = initialValue;
   }
 } catch (e) {
   // Do nothing, initial value already defined
 }
+
+// Language (default is French)
+// Not a very nice way to do this, but since it's just a prototype for the US team ...
+if (qs.l === 'en') {
+  format = formatAsDollars;
+  $('#not-shared-message').html('NO SHARED FLEET<br>FOR YOUR SERVICE VEHICLES?');
+  $('#lost-message').html('Since the beginning of the event, YOU HAVE LOST:');
+}
+
+// Increase speed
+try {
+  var _i = qs.i;
+  _i = parseInt(_i, 10);
+  if (!isNaN(_i)) {
+    incrementPerSecond = _i;
+  }
+} catch (e) {
+  // Do nothing, initial increment already defined
+}
+
 
 nowUpdating();
 
